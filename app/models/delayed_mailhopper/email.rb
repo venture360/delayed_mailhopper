@@ -6,7 +6,8 @@ module DelayedMailhopper
     after_create :enqueue
 
     def enqueue
-      Delayed::Job.enqueue(SendJob.new(self.id))
+      job = ::DelayedMailhopper::SendJob.new(self.id)
+      Delayed::Job.enqueue(job)
     end
   end
 end
